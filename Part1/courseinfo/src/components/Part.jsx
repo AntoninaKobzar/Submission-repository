@@ -1,12 +1,10 @@
 
+const Part=({name,exercises})=>{
 
-const Part=(props)=>{
-
-console.log(props.exercises)
     return(
         <div>
       <p>
-        {props.name} {props.exercises}
+        {name}  {exercises}
       </p>
         </div>
     )
