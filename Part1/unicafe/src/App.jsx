@@ -22,7 +22,8 @@ const handleNeutralFeedback=()=>{
       <button onClick={handleGoodFeedback}>good</button>
       <button onClick={handleNeutralFeedback}>neutral</button>
       <button onClick={handleBadFeedback}>bad</button>
-      <Statistics good={good} bad={bad} neutral={neutral}/>
+      {(good!==0||bad!==0||neutral!==0)?
+      <Statistics good={good} bad={bad} neutral={neutral}/>:<p>"No feedback given"</p>}
     </div>
   )
 }
