@@ -1,15 +1,11 @@
 const Total = ({ parts }) => {
-    console.log(parts);
-  
-    const totalExercises = parts.reduce((sum, part) => sum + part.exercises, 0);
-  
     return (
       <div>
-        <p>Number of exercises {totalExercises}</p>
+        <p>Total number of exercises: {parts.reduce((sum, part) => sum + part.exercises, 0)}</p>
       </div>
     );
   };
-    
+  
   export default Total;
 
      
