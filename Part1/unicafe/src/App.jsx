@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import Statistics from './components/Statistics'
+import Button from './components/Button'
+
 
 const App = () => {
  
@@ -16,14 +18,18 @@ const handleNeutralFeedback=()=>{
     setBad(bad+1)
     }
 
+ 
+
   return (
     <div>
       <h2>give fidback</h2>
-      <button onClick={handleGoodFeedback}>good</button>
-      <button onClick={handleNeutralFeedback}>neutral</button>
-      <button onClick={handleBadFeedback}>bad</button>
+      <Button onClick={handleGoodFeedback} text="good"/>
+      <Button onClick={handleNeutralFeedback} text="neutral"/>
+      <Button onClick={handleBadFeedback} text="bad"/>
       {(good!==0||bad!==0||neutral!==0)?
-      <Statistics good={good} bad={bad} neutral={neutral}/>:<p>"No feedback given"</p>}
+       <Statistics good={good} bad={bad} neutral={neutral}/>
+      :<p>"No feedback given"</p>
+      }
     </div>
   )
 }
