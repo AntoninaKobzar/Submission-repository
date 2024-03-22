@@ -24,13 +24,20 @@ const handleVote = () => {
   votesCopy[selected] += 1;
   setVotes(votesCopy);
 };
+
+const maxVotesIndex = votes.indexOf(Math.max(...votes));
+
   return (
     <div>
+      <h2>Anecdote of the Day</h2>
       {anecdotes[selected]}
       <div>Has {votes[selected]} votes</div>
       <br />
       <button onClick={handleVote}>Vote</button>
       <button onClick={handleRandomNumber}>next anecdote</button>
+      <h2>Anecdote with most votes</h2>
+      <div>{anecdotes[maxVotesIndex]}</div>
+      <div>Has {votes[maxVotesIndex]} votes</div>
     </div>
   )
 }
