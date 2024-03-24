@@ -13,9 +13,18 @@ const handleNameChange=(e)=>{
 
 const handleAddName=(e)=>{
   e.preventDefault();
- setPersons([...persons, { name: newName }]);
- console.log(newName)
- setNewName('');
+  for(const person of persons){
+    if(person.name===newName){
+      window.alert(`${newName} is already added to phonebook`)
+      setNewName('');
+      return
+    }else{
+      setPersons([...persons, { name: newName }]);
+      setNewName('');
+    }
+    }
+   
+
 }
   return (
     <div>
