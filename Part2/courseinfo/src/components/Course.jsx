@@ -1,5 +1,6 @@
 import Content from "./Content"
 import Header  from "./Header"
+import Total from "./Total"
 
 const Course=(props)=>{
 
@@ -7,6 +8,7 @@ const Course=(props)=>{
         <>
         <Header name={props.course.name}/>
         <Content parts={props.course.parts}/>
+        <Total parts={props.course.parts}/>
         </>
     )
 }
