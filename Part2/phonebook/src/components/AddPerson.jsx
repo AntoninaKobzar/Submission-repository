@@ -5,8 +5,10 @@ const AddPerson = ({persons,setPersons}) => {
     
     const [newName, setNewName] = useState('')
     const[number,setPhone]=useState('')
+   
     const handleNameChange=(e)=>{
       setNewName(e.target.value)
+     
     }
     const handleNumberChange=(e)=>{
       setPhone(e.target.value)
@@ -18,9 +20,10 @@ const AddPerson = ({persons,setPersons}) => {
       window.alert(`${newName} is already added to the phonebook`);
       return;
     }
-        setPersons([...persons, { name: newName,number:number }])
+        setPersons([...persons, {name: newName,number:number }])
         setNewName('')
         setPhone('')
+        
       
       }
   
