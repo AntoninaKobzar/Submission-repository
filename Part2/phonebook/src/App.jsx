@@ -4,6 +4,7 @@ import AddPerson from './components/AddPerson';
 import People from './components/People';
 import Person from './components/Person';
 import axios from 'axios'
+import noteService from './services/persons'
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -11,11 +12,11 @@ const App = () => {
   const [searchResult, setSearchResult] = useState('');
 
   useEffect(()=>{
-    axios.get('http://localhost:3001/persons')
-    .then(response=>{
-    setPersons(response.data)
+    noteService.getAll()
+    .then(initialPersons=>{
+    setPersons(initialPersons)
     })
-  })
+  },[])
   const handleSearchChange = (e) => {
     const query = e.target.value.toLowerCase();
     setSearchResult(query);

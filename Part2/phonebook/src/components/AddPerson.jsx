@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
+import noteService from '../services/persons'
 
 const AddPerson = ({persons,setPersons}) => {
     
@@ -16,15 +17,20 @@ const AddPerson = ({persons,setPersons}) => {
   
   const handleAddName=(e)=>{
     e.preventDefault();
+    const personObject={
+      name:newName,
+      number:number
+    }
     if (persons.some(person => person.name.toLowerCase() === newName.toLowerCase())) {
       window.alert(`${newName} is already added to the phonebook`);
       return;
     }
-        setPersons([...persons, {name: newName,number:number }])
-        setNewName('')
+    noteService.create(personObject)
+    .then(returnedPerson=>{
+      setPersons(persons.concat(returnedPerson))
+      setNewName('')
         setPhone('')
-        
-      
+    })
       }
   
   return (
