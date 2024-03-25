@@ -3,12 +3,11 @@ import Filter from './components/Filter';
 import AddPerson from './components/AddPerson';
 import People from './components/People';
 import Person from './components/Person';
-import axios from 'axios'
+// import axios from 'axios'
 import noteService from './services/persons'
 
 const App = () => {
   const [persons, setPersons] = useState([]);
-
   const [searchResult, setSearchResult] = useState('');
 
   useEffect(()=>{
@@ -18,13 +17,16 @@ const App = () => {
     })
   },[])
   const handleSearchChange = (e) => {
-    const query = e.target.value.toLowerCase();
-    setSearchResult(query);
+     const searchResult = e.target.value.toLowerCase();
+    setSearchResult(searchResult);
+    persons.filter(person =>
+         person.name.toLowerCase().includes(searchResult)
+      );
   };
 
-  const filteredPersons = persons.filter(person =>
-    person.name.toLowerCase().includes(searchResult)
-  );
+  // const filteredPersons = persons.filter(person =>
+  //   person.name.toLowerCase().includes(searchResult)
+  // );
  
 
   return (
@@ -33,8 +35,9 @@ const App = () => {
       <Filter searchResult={searchResult} handleSearchChange={handleSearchChange} />
       <AddPerson persons={persons} setPersons={setPersons} />
       {searchResult?
-      (<Person persons={filteredPersons} />):
-      (<People persons={persons} />)}
+      (<Person persons={persons}setPersons={setPersons} />):
+      (<People persons={persons} setPersons={setPersons} />)}
+       
     </div>
   );
 };
