@@ -3,7 +3,6 @@ import Filter from './components/Filter';
 import AddPerson from './components/AddPerson';
 import People from './components/People';
 import Person from './components/Person';
-// import axios from 'axios'
 import noteService from './services/persons'
 
 const App = () => {
@@ -22,11 +21,13 @@ const App = () => {
     persons.filter(person =>
          person.name.toLowerCase().includes(searchResult)
       );
+      
   };
 
-  // const filteredPersons = persons.filter(person =>
-  //   person.name.toLowerCase().includes(searchResult)
-  // );
+  const filteredPersons = persons.filter(person =>
+    person.name.toLowerCase().includes(searchResult)
+    
+  );
  
 
   return (
@@ -35,7 +36,7 @@ const App = () => {
       <Filter searchResult={searchResult} handleSearchChange={handleSearchChange} />
       <AddPerson persons={persons} setPersons={setPersons} />
       {searchResult?
-      (<Person persons={persons}setPersons={setPersons} />):
+      (<Person persons={filteredPersons}setPersons={setPersons} />):
       (<People persons={persons} setPersons={setPersons} />)}
        
     </div>
