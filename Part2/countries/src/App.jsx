@@ -5,6 +5,7 @@ import { useEffect,useState } from 'react'
 function App() {
 const[countries,setCountries]=useState([]) 
 const [searchTerm, setSearchTerm] = useState('');
+const [selectedCountry, setSelectedCountry] = useState(null);
 
 useEffect(()=>{
   axios.get('https://restcountries.com/v3.1/all')
@@ -17,46 +18,53 @@ useEffect(()=>{
 },[])
 const handleSearch=(e)=>{
 setSearchTerm(e.target.value)
+setSelectedCountry(null);
 }
+const handleCountryInfo = country => {
+  setSelectedCountry(country);
+};
 const filteredCountries = countries.filter(country =>
   country.name.common.toLowerCase().includes(searchTerm.toLowerCase())
 );
 
-const renderCountries = () => {
-  if (filteredCountries.length === 0) {
-    return <p>No countries found.</p>;
-  } else if (filteredCountries.length > 10) {
-    return <p>Too many matches, please specify your search.</p>;
-  } else if (filteredCountries.length === 1) {
-    const country = filteredCountries[0];
+
+const renderCountryInfo = () => {
+  if (selectedCountry) {
     return (
       <div>
-        <h2>{country.name.common}</h2>
-        <p>Capital: {country.capital}</p>
-        <p>Population: {country.population}</p>
-        <p>Languages: {Object.values(country.languages).map((language, index) => (
-        <span key={index}>{language}</span>
-        ))}</p>
-        <p>Flag: <img src={country.flags.svg} alt="Country Flag"  width='150'/></p>
+        <h2>{selectedCountry.name.common}</h2>
+        <p>Capital: {selectedCountry.capital}</p>
+        <p>Population: {selectedCountry.population}</p>
+        <p>Languages: {Object.values(selectedCountry.languages).join(', ')}</p>
+        <p>Flag: <img src={selectedCountry.flags.svg} alt="Country Flag" width='150' /></p>
       </div>
     );
-  } else {
-    return (
-      <ul>
-        {filteredCountries.map(country => (
-          <li key={country.cca3}>{country.name.common}</li>
-        ))}
-      </ul>
-    );
   }
+  return null;
 };
-  return (
-    <>
-      <h2>find countries</h2>
-      <input type="text" onChange={handleSearch} value={searchTerm} />
-      <div>{renderCountries()}</div>
-    </>
-  )
-}
 
+return (
+  <>
+    <h2>Find countries</h2>
+    <input type="text" onChange={handleSearch} value={searchTerm} />
+    <div>
+      {filteredCountries.length > 10 ? (
+        <p>Too many matches, please specify your search.</p>
+      ) : (
+        <>
+          <ul>
+            {filteredCountries.map(country => (
+              <li key={country.cca3}>
+                {country.name.common}{' '}
+                <button onClick={() => handleCountryInfo(country)}>Show</button>
+              </li>
+            ))}
+          </ul>
+          {renderCountryInfo()}
+        </>
+      )}
+    </div>
+  </>
+);
+}
 export default App
