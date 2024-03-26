@@ -15,23 +15,68 @@ const AddPerson = ({persons,setPersons}) => {
       setPhone(e.target.value)
     }
   
-  const handleAddName=(e)=>{
+  // const handleAddName=(e)=>{
+  //   e.preventDefault();
+  //   const personObject={
+  //     name:newName,
+  //     number:number
+  //   }
+  //   if (persons.some(person => person.name.toLowerCase() === newName.toLowerCase())) {
+  //     window.alert(`${newName} is already added to the phonebook`);
+  //     return;
+  //   }
+  //   noteService.create(personObject)
+  //   .then(returnedPerson=>{
+  //     setPersons(persons.concat(returnedPerson))
+  //     setNewName('')
+  //       setPhone('')
+  //   })
+  //     }
+  const handleAddName = (e) => {
     e.preventDefault();
-    const personObject={
-      name:newName,
-      number:number
+    const personObject = {
+      name: newName,
+      number: number,
+    };
+
+  const existingPerson = persons.find(
+    (person) => person.name.toLowerCase() === newName.toLowerCase()
+  );
+
+  if (existingPerson) {
+    const confirmUpdate = window.confirm(
+      `${newName} is already added to the phonebook. Do you want to update the phone number?`
+    );
+
+    if (confirmUpdate) {
+      noteService
+        .updatePerson(existingPerson.id, personObject)
+        .then((updatedPerson) => {
+          setPersons(
+            persons.map((person) =>
+              person.id !== existingPerson.id ? person : updatedPerson
+            )
+          );
+          setNewName('');
+          setPhone('');
+        })
+        .catch((error) => {
+          console.error('Error updating person:', error);
+        });
     }
-    if (persons.some(person => person.name.toLowerCase() === newName.toLowerCase())) {
-      window.alert(`${newName} is already added to the phonebook`);
-      return;
-    }
-    noteService.create(personObject)
-    .then(returnedPerson=>{
-      setPersons(persons.concat(returnedPerson))
-      setNewName('')
-        setPhone('')
-    })
-      }
+  } else {
+    noteService
+      .create(personObject)
+      .then((returnedPerson) => {
+        setPersons(persons.concat(returnedPerson));
+        setNewName('');
+        setPhone('');
+      })
+      .catch((error) => {
+        console.error('Error creating person:', error);
+      });
+  }
+};
   
   return (
     <div>
