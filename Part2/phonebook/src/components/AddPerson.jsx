@@ -1,12 +1,12 @@
-import React from 'react'
+
 import { useState } from 'react';
 import noteService from '../services/persons'
 
-const AddPerson = ({persons,setPersons}) => {
-    
+    const AddPerson = ({persons,setPersons,showMessage}) => {
     const [newName, setNewName] = useState('')
     const[number,setPhone]=useState('')
-   
+ 
+
     const handleNameChange=(e)=>{
       setNewName(e.target.value)
      
@@ -15,30 +15,13 @@ const AddPerson = ({persons,setPersons}) => {
       setPhone(e.target.value)
     }
   
-  // const handleAddName=(e)=>{
-  //   e.preventDefault();
-  //   const personObject={
-  //     name:newName,
-  //     number:number
-  //   }
-  //   if (persons.some(person => person.name.toLowerCase() === newName.toLowerCase())) {
-  //     window.alert(`${newName} is already added to the phonebook`);
-  //     return;
-  //   }
-  //   noteService.create(personObject)
-  //   .then(returnedPerson=>{
-  //     setPersons(persons.concat(returnedPerson))
-  //     setNewName('')
-  //       setPhone('')
-  //   })
-  //     }
   const handleAddName = (e) => {
     e.preventDefault();
     const personObject = {
       name: newName,
       number: number,
     };
-
+    
   const existingPerson = persons.find(
     (person) => person.name.toLowerCase() === newName.toLowerCase()
   );
@@ -59,9 +42,10 @@ const AddPerson = ({persons,setPersons}) => {
           );
           setNewName('');
           setPhone('');
+          showMessage(`${updatedPerson.name}\`s number was changed`,'success');
         })
         .catch((error) => {
-          console.error('Error updating person:', error);
+          showMessage('Failed to update phone number. Please try again later.', 'error');
         });
     }
   } else {
@@ -71,13 +55,14 @@ const AddPerson = ({persons,setPersons}) => {
         setPersons(persons.concat(returnedPerson));
         setNewName('');
         setPhone('');
+        showMessage(`${returnedPerson.name} was added`,'success')
       })
       .catch((error) => {
-        console.error('Error creating person:', error);
+        showMessage('Failed to add new contact. Please try again later.', 'error');
       });
   }
 };
-  
+
   return (
     <div>
       <h2>Add a New Contact</h2>

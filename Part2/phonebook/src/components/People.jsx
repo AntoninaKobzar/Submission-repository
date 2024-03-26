@@ -1,20 +1,23 @@
-import React from 'react';
+
+import { useState } from 'react';
 import noteService from '../services/persons'
 
-const People = ({ persons,setPersons }) => {
+
+const People = ({ persons,setPersons,showMessage }) => {
 
 const handleDelete=(id)=>{
+  const confirmDelete = window.confirm("Are you sure you want to delete this user?");
+  if (confirmDelete) {
 noteService.deletePerson(id)
 .then(()=>{
 setPersons([...persons].filter(person=>person.id!==id))
-console.log('Person deleted successfully')
+showMessage('Person was deleted','success')
 })
-.catch((error)=>{
-  console.error('Error deleting person:',error)
+.catch((error) => {
+  showMessage('Person has already been removed from server.', 'error')
 })
-  }
-
-
+  }}
+ 
   return (
     <>
       <h2>Numbers</h2>
