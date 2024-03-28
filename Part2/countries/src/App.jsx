@@ -38,7 +38,7 @@ useEffect(() => {
         console.error('Error fetching weather data:', error);
       });
   }
-}, [selectedCountry]);
+},[selectedCountry, api_key]);
 
 const renderCountryInfo = () => {
   
