@@ -55,10 +55,10 @@ import noteService from '../services/persons'
         setPersons(persons.concat(returnedPerson));
         setNewName('');
         setPhone('');
-        showMessage(`${returnedPerson.name} was added`,'success')
+        showMessage(`${newName} was added`,'success')
       })
       .catch((error) => {
-        showMessage(`Person validation failed:name ${returnedPerson.name} is shorter than the minimum allowed length(3)`,'error');
+        showMessage(`Person validation failed:name ${newName} is shorter than the minimum allowed length(3)`,'error');
       });
   }
 };
