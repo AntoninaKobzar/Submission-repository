@@ -58,7 +58,7 @@ import noteService from '../services/persons'
         showMessage(`${returnedPerson.name} was added`,'success')
       })
       .catch((error) => {
-        showMessage(`Person validation failed:name ${returnedPerson.name} is shorter than the minimum allowed length(3)`, 'error');
+        showMessage(`Person validation failed:name ${returnedPerson.name} is shorter than the minimum allowed length(3)`);
       });
   }
 };
