@@ -17,6 +17,11 @@ import noteService from '../services/persons'
   
   const handleAddName = (e) => {
     e.preventDefault();
+    const phoneNumberRegex = /^(\d{2,3})-(\d+)$/;
+    if (!phoneNumberRegex.test(number)) {
+      showMessage('Invalid phone number format. Please provide a number in the format XX-XXXXXXX or XXX-XXXXXXX.', 'error');
+      return;
+    }
     const personObject = {
       name: newName,
       number: number,
@@ -58,7 +63,7 @@ import noteService from '../services/persons'
         showMessage(`${newName} was added`,'success')
       })
       .catch((error) => {
-        showMessage(`Person validation failed:name ${newName} is shorter than the minimum allowed length(3)`,'error');
+        showMessage(`Failed to add ${newName}. Please try again later.`, 'error');
       });
   }
 };
